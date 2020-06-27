@@ -1,14 +1,14 @@
-domain: hetzner.lab
+domain: sz.com
 cluster_name: ocp4
-nfs_registry: false
+nfs_registry: true
 
 infra_nodes:
   host_list:
     bastion:
-      - ip: 192.168.100.4
+      - ip: 100.100.100.8
     loadbalancer:
-      - ip: 192.168.100.5
+      - ip: 100.100.100.9
 
 dhcp:
-  timezone: "Europe/Rome"
+  timezone: "Asia/Shanghai"
   ntp: 204.11.201.10

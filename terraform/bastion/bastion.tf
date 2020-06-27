@@ -1,6 +1,6 @@
 # variables that can be overriden
 variable "hostname" { default = "bastion" }
-variable "domain" { default = "hetzner.lab" }
+variable "domain" { default = "sz.com" }
 variable "cluster_name" { default = "ocp4" }
 variable "memory" { default = 6 }
 variable "cpu" { default = 2 }
@@ -30,7 +30,7 @@ provider "libvirt" {
 resource "libvirt_volume" "os_image" {
   name = "${var.hostname}-os_image"
   pool = var.libvirt_pool
-  source = "https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2"
+  source = "/home/media/ocp4.x/automation2/resources/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2"
   format = "qcow2"
 }
 

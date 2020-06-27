@@ -68,6 +68,6 @@
     - name: Installing csr cronjob
       cron:
         name: "Openshift csr approver"
-        minute: "1"
+        minute: "*/3"
         job: "{{ workspace_directory.base_path }}/csr.sh >> /tmp/aJob.log 2>&1"
         state: present

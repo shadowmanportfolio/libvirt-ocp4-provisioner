@@ -35,7 +35,7 @@
       unarchive:
         src: "{{ item }}"
         dest: /usr/local/bin
-        remote_src: yes
+        remote_src: no
       become: True
       loop:
         - "{{ downloads.ocp.base_url + downloads.ocp.ocp_oc_cli }}"
@@ -53,18 +53,22 @@
       failed_when: output.rc !=0
 
     - block:
-        - name: Download initramfs and kernel 
-          get_url:
-            url: "{{ downloads.rhcos.base_url + item }}"
+        - name: Download initramfs and kernel
+          copy:
+            src: "{{ downloads.rhcos.base_url + item }}"
             dest: "{{ tftp_boot_root }}/{{ tftp_workspace_dir }}/{{ item }}"
+            remote_src: no
+            mode: 0755
           loop:
             - "{{ downloads.rhcos.initramfs }}"
             - "{{ downloads.rhcos.kernel }}"
-      
 
         - name: Download Red Hat CoreOS for bare metal
-          get_url:
-            url:  "{{ downloads.rhcos.base_url + downloads.rhcos.coreos }}"
+          copy:
+            src: "{{ downloads.rhcos.base_url + downloads.rhcos.coreos }}"
             dest: "{{ nginx_document_root }}/{{ nginx_workspace_dir }}/{{ downloads.rhcos.coreos }}"
+            remote_src: no
+            mode: 0755
+
       when: not (skip_download | bool)
       become: true

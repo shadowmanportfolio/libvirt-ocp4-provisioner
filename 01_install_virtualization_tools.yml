@@ -7,7 +7,7 @@
 
     - name: Download and provision Terraform
       unarchive: 
-        src: https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+        src: ../resources/terraform_0.12.24_linux_amd64.zip
         dest: /usr/bin/
         mode: 755
         remote_src: yes
@@ -26,14 +26,23 @@
         enabled: true
       become: true
 
-    - git:
-        repo: https://github.com/dmacvicar/terraform-provider-libvirt.git
+    - name: Ensures terraform libvirt-provider directory exists
+      file:
+        path: ~/libvirt-provider
+        state: directory
+        mode: 0744
+
+    - name: Download terraform libvirt provider project to the libvirt-provider directory
+      unarchive:
+        src: ../resources/terraform-provider-libvirt-master.zip
         dest: ~/libvirt-provider
-        force: true
+        mode: 755
+        remote_src: yes
+      become: true
 
     - name: Run 'install' target on libivrt-provider
       make:
-        chdir: ~/libvirt-provider
+        chdir: ~/libvirt-provider/terraform-provider-libvirt-master
         target: install
 
     - name: Ensures terraform plugins directory exists
